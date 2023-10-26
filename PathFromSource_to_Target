@@ -1,0 +1,13 @@
+class Solution:
+    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        res=[]
+        target=len(graph)-1 
+
+        def dfs(ver,path):
+            for v in graph[ver]:
+                if v==target:
+                    res.append(path+[v])
+                dfs(v,path+[v])
+        
+        dfs(0,[0])
+        return(res)
