@@ -1,0 +1,22 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        premap={i:[] for i in range(numCourses)}
+        for course,preq in prerequisites:
+            premap[course].append(preq)
+        visitedset=set()
+        def dfs(course):
+            if course in visitedset:
+                return False 
+            if premap[course] ==[]:
+                return True 
+            visitedset.add(course)
+            for preq in premap[course]:
+                if not dfs(preq):
+                    return False 
+            visitedset.remove(course)
+            premap[course]=[]
+            return True 
+        for course in range(numCourses):
+            if not dfs(course):
+                return False 
+        return True
