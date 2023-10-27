@@ -1,0 +1,18 @@
+class Solution:
+    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start_node: int, end_node: int) -> float:
+        adj=defaultdict(list)
+        for i in range(len(edges)):
+            sou,des=edges[i]
+            adj[sou].append((des,succProb[i]))
+            adj[des].append((sou,succProb[i]))
+        visited=set()
+        maxheap=[[-1,start_node]]#-1 to maintain an maxheap property
+        while maxheap:
+            prob,node=heapq.heappop(maxheap)
+            visited.add(node)
+            if node==end_node:
+                return prob*-1 #-1 mul is to rid out the negative value
+            for nei,edgeprob in adj[node]:
+                if nei not in visited:
+                    heapq.heappush(maxheap,[prob*edgeprob,nei])
+        return 0
